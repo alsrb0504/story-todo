@@ -38,9 +38,15 @@ function App() {
     setTodoItems(updated);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
+  const onUpdateTodo = (todoId: number, updatedText: string) => {
+    const updated = todoItems.map((todo) =>
+      todo.todoId === todoId ? { ...todo, text: updatedText } : todo
+    );
 
+    setTodoItems(updated);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAddText(e.target.value);
   };
 
@@ -70,6 +76,7 @@ function App() {
               todo={todo}
               onClickTodo={onClickTodo}
               onDeleteTodo={onDeleteTodo}
+              onUpdateTodo={onUpdateTodo}
             />
           ))}
         </ul>
