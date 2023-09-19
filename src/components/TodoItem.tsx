@@ -1,14 +1,17 @@
 import { Todo } from "../types";
 import { BsCheck } from "react-icons/bs";
+import { AiFillCloseCircle } from "react-icons/ai";
 
 export interface TodoItemProps {
   todo: Todo;
   onClickTodo: (todoId: number) => void;
+  onDeleteTodo: (todoId: number) => void;
 }
 
 const TodoItem = ({
-  todo: { todoId, isChecked, text, createdAt },
+  todo: { todoId, isChecked, text },
   onClickTodo,
+  onDeleteTodo,
 }: TodoItemProps) => {
   return (
     <li className="flex gap-4 items-center h-16 px-6 text-default font-semibold">
@@ -26,9 +29,10 @@ const TodoItem = ({
       >
         {text}
       </span>
-      <span className={`${isChecked && "opacity-50 line-through"}`}>
-        {createdAt}
-      </span>
+      <AiFillCloseCircle //
+        className="text-3xl hover:opacity-60"
+        onClick={() => onDeleteTodo(todoId)}
+      />
     </li>
   );
 };
