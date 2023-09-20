@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Todo } from "./types";
 import TodoItem from "./components/TodoItem";
+import { BiSolidPencil } from "react-icons/bi";
 import "./App.css";
 
 const initTodos: Todo[] = [
@@ -21,8 +22,12 @@ const initTodos: Todo[] = [
   },
 ];
 
-function App() {
-  const [todoItems, setTodoItems] = useState<Todo[]>(initTodos);
+interface Props {
+  todos?: Todo[];
+}
+
+function App({ todos }: Props) {
+  const [todoItems, setTodoItems] = useState<Todo[]>(todos || initTodos);
   const [addText, setAddText] = useState("");
 
   const onClickTodo = (todoId: number) => {
@@ -69,16 +74,27 @@ function App() {
         <h1 className="text-default pb-4 text-3xl font-bold border-b-default border-gray-300">
           Todo List
         </h1>
-        <ul className="flex-1">
-          {todoItems.map((todo) => (
-            <TodoItem //
-              key={todo.todoId}
-              todo={todo}
-              onClickTodo={onClickTodo}
-              onDeleteTodo={onDeleteTodo}
-              onUpdateTodo={onUpdateTodo}
-            />
-          ))}
+        <ul className="flex-1 overflow-y-scroll scrollbar-hide">
+          {/* <ul className="flex-1 overflow-y-scroll"> */}
+          {todoItems.length > 0 &&
+            todoItems.map((todo) => (
+              <TodoItem //
+                key={todo.todoId}
+                todo={todo}
+                onClickTodo={onClickTodo}
+                onDeleteTodo={onDeleteTodo}
+                onUpdateTodo={onUpdateTodo}
+              />
+            ))}
+
+          {todoItems.length === 0 && (
+            <div className="h-full flex flex-col items-center justify-center">
+              <div className="flex items-center justify-center w-12 h-12 mb-4 bg-default rounded-full">
+                <BiSolidPencil color="white" size={32} />
+              </div>
+              <p>TodoList를 작성해보세요~</p>
+            </div>
+          )}
         </ul>
 
         <input //
